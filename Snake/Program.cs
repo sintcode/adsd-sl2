@@ -48,84 +48,84 @@
         }
     }
 
-    public class Snake : Character {
-        //Constructor voor slang, Wall om te kiezen tussen welke wall hij komt en kleur omdat we allemaal andere kleuren slang hebben
-        public Snake(Wall wall, ConsoleColor colour) {
-            Colour = colour;
-            Speed = 8;
-            Length = 1;
-            StartPosition = (wall.Width / 2, wall.Height / 2);
-        }
+    
 
-        //Tekent de slang in slangenkleur en tekent over zijn spoor
-        public void Draw(Snake snake) {
-            if(snake.xPosition == null && snake.yPosition == null) {
-                Console.SetCursorPosition(StartPosition.x, StartPosition.y);
-            }
-            if(snake.xPosition != null && snake.yPosition != null){
-                Console.SetCursorPosition(snake.xPosition[0], snake.yPosition[0]);
-            }
-            Console.ForegroundColor = snake.Colour;
-            Console.Write("\u2558");
-            Console.ResetColor();
-
-            //Omdat je de console niet elke keer meer cleart moet je dit handmatig doen door naar de slang zijn staart
-            //Te gaan en het handmatig over te kleuren. Vergeet niet de cursor terug te doen.
-            if(snake.xPosition != null && snake.xPosition.Count() > snake.Length){
-                (int x, int y) currentPosition = (snake.xPosition[0], snake.yPosition[0]);
-                Console.SetCursorPosition(snake.xPosition[snake.Length], snake.yPosition[snake.Length]);
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.Write("\u2558");
-                Console.ResetColor();
-                Console.SetCursorPosition(currentPosition.x, currentPosition.y);
-            }
-        }
-
-        public void Update(Snake snake, Apple apple, Score score, ConsoleKeyInfo keyInfo){
-            int prevX = snake.xPosition[0], prevY = snake.yPosition[0];
-            int prev2X, prev2Y;
-
-            // Beweging van het hoofd van de slang
-            switch(keyInfo.Key) {
-                case ConsoleKey.RightArrow:
-                    snake.xPosition[0]++;
-                    Thread.Sleep((1000 / snake.Speed) / 2);
-                    break;
-                case ConsoleKey.LeftArrow:
-                    snake.xPosition[0]--;
-                    Thread.Sleep((1000 / snake.Speed) / 2);
-                    break;
-                case ConsoleKey.DownArrow:
-                    snake.yPosition[0]++;
-                    Thread.Sleep((1000 / snake.Speed));
-                    break;
-                case ConsoleKey.UpArrow:
-                    snake.yPosition[0]--;
-                    Thread.Sleep((1000 / snake.Speed));
-                    break;
-            }
-
-            // Beweging van de staart van de slang
-            for(int i = 1; i < snake.Length; i++) {
-                prev2X = snake.xPosition[i];
-                prev2Y = snake.yPosition[i];
-                snake.xPosition[i] = prevX;
-                snake.yPosition[i] = prevY;
-                prevX = prev2X;
-                prevY = prev2Y;
-            }   
-
-            //Als de slang positie over een appel positie gaat, meer lengte, meer snelhid, meer punten, nog meer punten hoe sneller je bent!
-            if(apple.xPosition == snake.xPosition && apple.yPosition == snake.yPosition) {
-                snake.Length++;
-                snake.Speed++;
-                //Gebaseerd op de slang zijn snelheid krijgt hij meer punten
-                score.CurrentScore += (10+(10*(snake.Speed/100)));
-            }
-        }  
-    }
-
-    //Simpele class voor muur tekenen
+    //Simpele public class Snake : Character {
+                      //Constructor voor slang, Wall om te kiezen tussen welke wall hij komt en kleur omdat we allemaal andere kleuren slang hebben
+                      public Snake(Wall wall, ConsoleColor colour) {
+                          Colour = colour;
+                          Speed = 8;
+                          Length = 1;
+                          StartPosition = (wall.Width / 2, wall.Height / 2);
+                      }
+              
+                      //Tekent de slang in slangenkleur en tekent over zijn spoor
+                      public void Draw(Snake snake) {
+                          if(snake.xPosition == null && snake.yPosition == null) {
+                              Console.SetCursorPosition(StartPosition.x, StartPosition.y);
+                          }
+                          if(snake.xPosition != null && snake.yPosition != null){
+                              Console.SetCursorPosition(snake.xPosition[0], snake.yPosition[0]);
+                          }
+                          Console.ForegroundColor = snake.Colour;
+                          Console.Write("\u2558");
+                          Console.ResetColor();
+              
+                          //Omdat je de console niet elke keer meer cleart moet je dit handmatig doen door naar de slang zijn staart
+                          //Te gaan en het handmatig over te kleuren. Vergeet niet de cursor terug te doen.
+                          if(snake.xPosition != null && snake.xPosition.Count() > snake.Length){
+                              (int x, int y) currentPosition = (snake.xPosition[0], snake.yPosition[0]);
+                              Console.SetCursorPosition(snake.xPosition[snake.Length], snake.yPosition[snake.Length]);
+                              Console.ForegroundColor = ConsoleColor.Black;
+                              Console.Write("\u2558");
+                              Console.ResetColor();
+                              Console.SetCursorPosition(currentPosition.x, currentPosition.y);
+                          }
+                      }
+              
+                      public void Update(Snake snake, Apple apple, Score score, ConsoleKeyInfo keyInfo){
+                          int prevX = snake.xPosition[0], prevY = snake.yPosition[0];
+                          int prev2X, prev2Y;
+              
+                          // Beweging van het hoofd van de slang
+                          switch(keyInfo.Key) {
+                              case ConsoleKey.RightArrow:
+                                  snake.xPosition[0]++;
+                                  Thread.Sleep((1000 / snake.Speed) / 2);
+                                  break;
+                              case ConsoleKey.LeftArrow:
+                                  snake.xPosition[0]--;
+                                  Thread.Sleep((1000 / snake.Speed) / 2);
+                                  break;
+                              case ConsoleKey.DownArrow:
+                                  snake.yPosition[0]++;
+                                  Thread.Sleep((1000 / snake.Speed));
+                                  break;
+                              case ConsoleKey.UpArrow:
+                                  snake.yPosition[0]--;
+                                  Thread.Sleep((1000 / snake.Speed));
+                                  break;
+                          }
+              
+                          // Beweging van de staart van de slang
+                          for(int i = 1; i < snake.Length; i++) {
+                              prev2X = snake.xPosition[i];
+                              prev2Y = snake.yPosition[i];
+                              snake.xPosition[i] = prevX;
+                              snake.yPosition[i] = prevY;
+                              prevX = prev2X;
+                              prevY = prev2Y;
+                          }   
+              
+                          //Als de slang positie over een appel positie gaat, meer lengte, meer snelhid, meer punten, nog meer punten hoe sneller je bent!
+                          if(apple.xPosition == snake.xPosition && apple.yPosition == snake.yPosition) {
+                              snake.Length++;
+                              snake.Speed++;
+                              //Gebaseerd op de slang zijn snelheid krijgt hij meer punten
+                              score.CurrentScore += (10+(10*(snake.Speed/100)));
+                          }
+                      }  
+                  }class voor muur tekenen
     public class Wall{
         public int Height, Width;
 
